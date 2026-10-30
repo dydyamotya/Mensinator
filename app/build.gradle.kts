@@ -26,7 +26,8 @@ android {
             applicationIdSuffix = ".debug"
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -39,7 +40,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs += listOf("-Xdebug")
     }
     buildFeatures {
         compose = true
@@ -69,6 +69,14 @@ android {
     }
     testOptions {
         unitTests.isReturnDefaultValues = true
+    }
+}
+
+// -Xdebug disables coroutine optimizations and is only useful while debugging.
+// Keep it for debug variants, but not for release builds.
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    if (name.contains("Debug")) {
+        compilerOptions.freeCompilerArgs.add("-Xdebug")
     }
 }
 
