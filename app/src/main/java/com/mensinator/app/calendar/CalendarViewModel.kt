@@ -49,7 +49,7 @@ class CalendarViewModel(
             _viewState.update {
                 it.copy(
                     showCycleNumbers = showCycleNumbersSetting,
-                    periodPredictionDate = periodPrediction.getPredictedPeriodDate(),
+                    periodPredictionDates = periodPrediction.getPredictedPeriodDates(),
                     ovulationPredictionDate = ovulationPrediction.getPredictedOvulationDate(),
                     periodDates = dbHelper.getPeriodDatesForMonthNew(
                         it.focusedYearMonth.year,
@@ -195,7 +195,7 @@ class CalendarViewModel(
 
         val showCycleNumbers: Boolean = false,
         val focusedYearMonth: YearMonth = YearMonth.now(),
-        val periodPredictionDate: LocalDate? = null,
+        val periodPredictionDates: PersistentSet<LocalDate> = persistentSetOf(),
         val ovulationPredictionDate: LocalDate? = null,
         val periodDates: PersistentMap<LocalDate, Int> = persistentMapOf(),
         val symptomDates: PersistentMap<LocalDate, Set<Symptom>> = persistentMapOf(),
